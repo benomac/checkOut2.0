@@ -1,0 +1,54 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(~run "e 30 0 0,f 20 2 30,g 0.30 4 100.0", Some(7859b591-9b7c-45c2-af7c-b36d62257ca1), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__runWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtStashOnFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__preWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run "e 30 0 0,f 20 2 30,g 0.30 4 100.0", None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[31merror[0m] [0m[0mjava.lang.NumberFormatException: For input string: "0.30"[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Integer.parseInt(Integer.java:652)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Integer.parseInt(Integer.java:770)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.StringOps$.toInt$extension(StringOps.scala:915)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.CurrentlyAvailableProducts$.checkFormat(CurrentlyAvailableProducts.scala:53)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.CurrentlyAvailableProducts$.incorrectFormat(CurrentlyAvailableProducts.scala:33)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.CurrentlyAvailableProducts$.checkFormat(CurrentlyAvailableProducts.scala:54)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.CurrentlyAvailableProducts$.createNewSKUMapIfThereAreNewSKUsAvailable(CurrentlyAvailableProducts.scala:25)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$.delayedEndpoint$CheckOut$Main$1(Main.scala:14)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$delayedInit$body.apply(Main.scala:8)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.Function0.apply$mcV$sp(Function0.scala:39)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.Function0.apply$mcV$sp$(Function0.scala:39)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.AbstractFunction0.apply$mcV$sp(AbstractFunction0.scala:17)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.App.$anonfun$main$1(App.scala:76)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.App.$anonfun$main$1$adapted(App.scala:76)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.IterableOnceOps.foreach(IterableOnce.scala:563)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.IterableOnceOps.foreach$(IterableOnce.scala:561)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.AbstractIterable.foreach(Iterable.scala:926)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.App.main(App.scala:76)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.App.main$(App.scala:74)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$.main(Main.scala:8)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main.main(Main.scala)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.reflect.Method.invoke(Method.java:566)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.invokeMain(Run.scala:143)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.execute$1(Run.scala:93)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.$anonfun$runWithLoader$5(Run.scala:120)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run$.executeSuccess(Run.scala:186)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.runWithLoader(Run.scala:120)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Defaults$.$anonfun$bgRunTask$6(Defaults.scala:1983)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Defaults$.$anonfun$termWrapper$2(Defaults.scala:1922)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.util.Try$.apply(Try.scala:213)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.BackgroundThreadPool$BackgroundRunnable.run(DefaultBackgroundJobService.scala:369)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Thread.run(Thread.java:829)[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mrun[0m) java.lang.NumberFormatException: For input string: "0.30"[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 0 s, completed 15 Mar 2022, 16:06:14[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(resumeFromFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(sbtPopOnFailure, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__postWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(__waitWatch console0, None, Some(CommandSource(console0)))[0m
+[0m[[0m[0minfo[0m] [0m[0mshutting down sbt server[0m
