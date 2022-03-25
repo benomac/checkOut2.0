@@ -1,3 +1,3 @@
-[debug] not up to date. inChanged = false, force = false
-[debug] Updating ProjectRef(uri("file:/Users/benmcal/scalaCode/CheckOut2.0/project/"), "checkout2-0-build")...
-[debug] Done updating ProjectRef(uri("file:/Users/benmcal/scalaCode/CheckOut2.0/project/"), "checkout2-0-build")
+[debug] not up to date. inChanged = true, force = false
+[debug] Updating ProjectRef(uri("file:/Users/benomac/work/checkOut2.0/project/"), "checkout2-0-build")...
+[debug] Done updating ProjectRef(uri("file:/Users/benomac/work/checkOut2.0/project/"), "checkout2-0-build")

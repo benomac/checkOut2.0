@@ -1,2 +1,5 @@
-[0m[[0m[0mdebug[0m] [0m[0mAcquiring lock on file /Users/benmcal/scalaCode/CheckOut2.0/project/target/.sbt-compilation-infos/root-compile/.sbt-idea-lock ...[0m
-[0m[[0m[0mdebug[0m] [0m[0mReleasing lock on file /Users/benmcal/scalaCode/CheckOut2.0/project/target/.sbt-compilation-infos/root-compile/.sbt-idea-lock.[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/benomac/work/checkOut2.0/src/main/scala/CheckOut/Parsers.scala:21:33: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: List(_), Nil[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ).string.map(_.split(" ").toList match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
