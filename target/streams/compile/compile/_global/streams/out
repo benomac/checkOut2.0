@@ -1,5 +1,6 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/benomac/work/checkOut2.0/src/main/scala/CheckOut/Parsers.scala:21:33: match may not be exhaustive.[0m
-[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: List(_), Nil[0m
-[0m[[0m[33mwarn[0m] [0m[0m      ).string.map(_.split(" ").toList match {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/benmcal/ScalaCode/checkOut2.0/src/main/scala/CheckOut/CurrentlyAvailableProducts.scala:31:48: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Map[String,CheckOut.Store.StockKeepingUnit][0m
+[0m[[0m[31merror[0m] [0m[0m required: (String, CheckOut.Store.StockKeepingUnit)[0m
+[0m[[0m[31merror[0m] [0m[0m      case Nil => currentlyAvailableProducts + acc[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

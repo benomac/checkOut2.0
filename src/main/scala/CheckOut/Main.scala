@@ -1,19 +1,18 @@
 package CheckOut
 
-import CheckOut.CurrentlyAvailableProducts.currentlyAvailableProducts
-import CheckOut.Parsers.{getListOfProducts, skuItemParser, splitCommandLineArgs}
+import CheckOut.CurrentlyAvailableProducts.{createNewSKUMapIfThereAreNewSKUsAvailable, currentlyAvailableProducts}
+import CheckOut.Parsers.{getListOfProducts, splitCommandLineArgs}
 import CheckOut.Store._
-
-import scala.annotation.tailrec
 
 object Main extends App {
 
-
   val splitArgs: List[String] = splitCommandLineArgs(args)
-  println(s"these are you args $splitArgs")
+  val justStockKeepingUnits = getListOfProducts(splitArgs)
+  val availableProducts: Map[String, StockKeepingUnit] = createNewSKUMapIfThereAreNewSKUsAvailable(justStockKeepingUnits)
+  val basket = makeBasket("aaaebqc", currentlyAvailableProducts = availableProducts)
+  println(basket.transaction)
+  println(createNewSKUMapIfThereAreNewSKUsAvailable(justStockKeepingUnits))
 
-
-  println(getListOfProducts(splitArgs))
 }
 
 
