@@ -1,31 +1,21 @@
 package CheckOut
 
-import CheckOut.CurrentlyAvailableProducts.{createNewSKUMapIfThereAreNewSKUsAvailable, currentlyAvailableProducts}
+import CheckOut.CurrentlyAvailableProducts.{checkForExtraProducts, createNewSKUMapIfThereAreNewSKUsAvailable, currentlyAvailableProducts}
+import CheckOut.Parsers.{commandLineArgsParser, getListOfProducts, splitCommandLineArgs}
 import CheckOut.Store._
 
-import scala.annotation.tailrec
-
 object Main extends App {
-  val newListOfProducts: Map[String, StockKeepingUnit] = {
+
+//  println("here" + args(0))
+  val availableProducts = {
     if(args.length == 0)
       currentlyAvailableProducts
     else
-      println(args(0))
-    createNewSKUMapIfThereAreNewSKUsAvailable(args(0))
+      checkForExtraProducts(args)
   }
-
-  @tailrec
-  def newShopper(): Unit = {
-
-    val basketContents: String = scala.io.StdIn.readLine("What's in your basket? :-")
-
-    val bas = makeBasket(basketContents, currentlyAvailableProducts = newListOfProducts)
-
-    println(bas.transaction)
-
-    newShopper()
-  }
-  newShopper()
+  val basketContents = scala.io.StdIn.readLine("Enter items list eg: abcd :-")
+  val basket = makeBasket(basketContents, currentlyAvailableProducts = availableProducts)
+  println(basket.transaction)
 
 }
 

@@ -16,7 +16,7 @@ object Store {
 
       prdToSkuMap.map {
         case (_, Nil) => BigDecimal.valueOf(0)
-        case (skuName: String, skus: List[StockKeepingUnit]) => calculate(skus.head, skus.size)
+        case (_, skus: List[StockKeepingUnit]) => calculate(skus.head, skus.size)
       }.sum
     }
 

@@ -9,3 +9,4 @@ lazy val root = (project in file("."))
 
 
 libraryDependencies += "org.typelevel" %% "cats-parse" % "0.3.6"
+libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test
