@@ -1,12 +1,12 @@
 package CheckOut
 
 
+import CheckOut.Parsers.{commandLineArgsParser, getListOfProducts}
 import CheckOut.Store.{Discount, StockKeepingUnit}
-
 import cats.parse.Parser
 import cats.parse.Numbers
 import cats.parse.Parser._
-import cats.parse.Rfc5234.{sp, alpha, digit}
+import cats.parse.Rfc5234.{alpha, digit, sp}
 import cats.parse.Parser
 
 import scala.annotation.tailrec
@@ -18,18 +18,25 @@ object CurrentlyAvailableProducts {
     "c" -> StockKeepingUnit("c", 0.2, None),
     "d" -> StockKeepingUnit("d", 0.15, None))
 
-  @tailrec
-  def createNewSKUMapIfThereAreNewSKUsAvailable(inputs: List[StockKeepingUnit], acc: Map[String, StockKeepingUnit] = Map.empty): Map[String, StockKeepingUnit] = {
-    inputs match {
-      case ::(head, next) =>
-        if (head.isInstanceOf[StockKeepingUnit])
-          createNewSKUMapIfThereAreNewSKUsAvailable(next, acc + (head.name -> head))
-        else {
-          println(s"Error $head invalid product")
-          createNewSKUMapIfThereAreNewSKUsAvailable(next, acc)
-        }
-      case Nil => acc ++ currentlyAvailableProducts
+  def checkForExtraProducts(potentialArgs: Array[String]): Map[String, StockKeepingUnit] =
+    commandLineArgsParser.parse(potentialArgs(0)) match {
+      case Left(_) => currentlyAvailableProducts
+      case _ =>
+        val potentialProducts = getListOfProducts(potentialArgs)
+        createNewSKUMapIfThereAreNewSKUsAvailable(potentialProducts)
     }
+
+  @tailrec
+  def createNewSKUMapIfThereAreNewSKUsAvailable(inputs: List[StockKeepingUnit], acc: Map[String, StockKeepingUnit] = currentlyAvailableProducts): Map[String, StockKeepingUnit] = {
+    inputs match {
+        case ::(head, next) =>
+          head match {
+            case StockKeepingUnit(_, _, _) => createNewSKUMapIfThereAreNewSKUsAvailable(next, acc + (head.name -> head))
+            case _ => createNewSKUMapIfThereAreNewSKUsAvailable(next, acc)
+          }
+        case Nil =>
+          acc ++ currentlyAvailableProducts
+      }
   }
 
 }

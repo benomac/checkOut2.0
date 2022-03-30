@@ -1,17 +1,21 @@
 package CheckOut
 
-import CheckOut.CurrentlyAvailableProducts.{createNewSKUMapIfThereAreNewSKUsAvailable, currentlyAvailableProducts}
-import CheckOut.Parsers.{getListOfProducts, splitCommandLineArgs}
+import CheckOut.CurrentlyAvailableProducts.{checkForExtraProducts, createNewSKUMapIfThereAreNewSKUsAvailable, currentlyAvailableProducts}
+import CheckOut.Parsers.{commandLineArgsParser, getListOfProducts, splitCommandLineArgs}
 import CheckOut.Store._
 
 object Main extends App {
 
-  val splitArgs: List[String] = splitCommandLineArgs(args)
-  val justStockKeepingUnits = getListOfProducts(splitArgs)
-  val availableProducts: Map[String, StockKeepingUnit] = createNewSKUMapIfThereAreNewSKUsAvailable(justStockKeepingUnits)
-  val basket = makeBasket("aaaebqc", currentlyAvailableProducts = availableProducts)
+//  println("here" + args(0))
+  val availableProducts = {
+    if(args.length == 0)
+      currentlyAvailableProducts
+    else
+      checkForExtraProducts(args)
+  }
+  val basketContents = scala.io.StdIn.readLine("Enter items list eg: abcd :-")
+  val basket = makeBasket(basketContents, currentlyAvailableProducts = availableProducts)
   println(basket.transaction)
-  println(createNewSKUMapIfThereAreNewSKUsAvailable(justStockKeepingUnits))
 
 }
 

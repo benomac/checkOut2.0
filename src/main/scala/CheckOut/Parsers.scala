@@ -1,11 +1,10 @@
 package CheckOut
 
-import CheckOut.Main.{args, splitArgs}
+import CheckOut.Main.args
 import CheckOut.Store.{Discount, StockKeepingUnit}
-import Parsers.skuItemParser
-import cats.parse.Parser
-import cats.parse.Numbers
-import cats.parse.Numbers.bigInt
+import Parsers.{mainParser, skuItemParser}
+import cats.data.NonEmptyList
+import cats.parse.{Numbers, Parser, Parser0}
 import cats.parse.Parser._
 import cats.parse.Rfc5234.{alpha, digit, sp}
 import cats.parse.Parser
@@ -13,26 +12,17 @@ import cats.parse.Parser
 object Parsers {
   private val multiDigit = digit.rep.string.map(_.toInt)
   private val none = ignoreCase("none")
-
-  def splitCommandLineArgs(args: Array[String]): List[String] = args(0).split(",").toList
-
-  def getListOfProducts(list: List[String]): List[StockKeepingUnit] = {
-    list.map(item => skuItemParser.parse(item) match {
-      case Left(v) =>
-        println(s"Incorrect format for $item")
-        Left(v)
-      case Right(v) => Right(v._2)
-    })
-      .filter(_.isRight).collect {
-      case Right(v) => v
-    }
-  }
-
-  def skuItemParser: Parser[StockKeepingUnit] =
+  private val mainParser =
     ((alpha <* sp)
-      ~ ((multiDigit <* char('.')) ~ bigInt)
+      ~ ((multiDigit <* char('.')) ~ multiDigit)
       ~ sp
       ~ ((digit <* sp) ~ ((multiDigit <* char('.')) ~ multiDigit) | none))
+
+  def commandLineArgsParser: Parser0[Equals with Serializable] =
+    (mainParser | mainParser <* char(',')) | mainParser.rep
+
+  def skuItemParser: Parser[StockKeepingUnit] =
+    mainParser
       .string
       .map(_.split(" ").toList match {
         case List(name, price, specialPrice, amountForSpecialPrice) =>
@@ -49,5 +39,24 @@ object Parsers {
       }
       )
 
+  def splitCommandLineArgs(args: Array[String]): List[String] =
+    args(0).split(",").toList
+
+
+  def getListOfProducts(products: Array[String]): List[StockKeepingUnit] = {
+    if (products.length == 0) Nil
+    else
+      splitCommandLineArgs(products)
+      .map(product => skuItemParser.parse(product) match {
+        case Left(v) =>
+          println(s"Incorrect format for product $product")
+          Left(v)
+        case Right(v) => Right(v._2)
+      }
+      )
+      .filter(_.isRight).collect {
+      case Right(v) => v
+    }
+  }
 
 }

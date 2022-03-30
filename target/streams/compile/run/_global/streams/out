@@ -1,7 +1,6 @@
 [0m[[0m[31merror[0m] [0m[0mjava.lang.ArrayIndexOutOfBoundsException: 0[0m
-[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Parsers$.splitCommandLineArgs(Parsers.scala:17)[0m
-[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$.delayedEndpoint$CheckOut$Main$1(Main.scala:11)[0m
-[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$delayedInit$body.apply(Main.scala:9)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$.delayedEndpoint$CheckOut$Main$1(Main.scala:9)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$delayedInit$body.apply(Main.scala:7)[0m
 [0m[[0m[31merror[0m] [0m[0m	at scala.Function0.apply$mcV$sp(Function0.scala:39)[0m
 [0m[[0m[31merror[0m] [0m[0m	at scala.Function0.apply$mcV$sp$(Function0.scala:39)[0m
 [0m[[0m[31merror[0m] [0m[0m	at scala.runtime.AbstractFunction0.apply$mcV$sp(AbstractFunction0.scala:17)[0m
@@ -12,7 +11,7 @@
 [0m[[0m[31merror[0m] [0m[0m	at scala.collection.AbstractIterable.foreach(Iterable.scala:926)[0m
 [0m[[0m[31merror[0m] [0m[0m	at scala.App.main(App.scala:76)[0m
 [0m[[0m[31merror[0m] [0m[0m	at scala.App.main$(App.scala:74)[0m
-[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$.main(Main.scala:9)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main$.main(Main.scala:7)[0m
 [0m[[0m[31merror[0m] [0m[0m	at CheckOut.Main.main(Main.scala)[0m
 [0m[[0m[31merror[0m] [0m[0m	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)[0m
 [0m[[0m[31merror[0m] [0m[0m	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)[0m

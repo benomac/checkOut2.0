@@ -1,20 +1,24 @@
-import CheckOut.Main.{args, splitArgs}
-
+import CheckOut.CurrentlyAvailableProducts.currentlyAvailableProducts
+import CheckOut.Parsers.multiDigit
 import CheckOut.Store.{Discount, StockKeepingUnit}
+import cats.data.NonEmptyList
 
-import cats.parse.Numbers._
-import cats.parse.Parser._
-import cats.parse.Rfc5234.{alpha, digit, sp}
-import cats.parse.Parser
+import cats.parse.{Parser, Parser0}
+import cats.parse.Parser.{anyChar, char, ignoreCase}
+import cats.parse.Rfc5234.{alpha, cr, digit, dquote, sp, wsp}
+
+import scala.annotation.tailrec
 
 object Parsers {
+  private val multiDigit = digit.rep.string.map(_.toInt)
+  private val multiChar = anyChar.rep.string
   private val none = ignoreCase("none")
 
   def skuItemParser: Parser[StockKeepingUnit] =
     ((alpha <* sp)
-      ~ ((bigInt <* char('.')) ~ bigInt)
+      ~ ((multiDigit <* char('.')) ~ multiDigit)
       ~ sp
-      ~ ((digit <* sp) ~ ((bigInt <* char('.')) ~ bigInt) | none))
+      ~ ((digit <* sp) ~ ((multiDigit <* char('.')) ~ multiDigit) | none))
       .string
       .map(_.split(" ").toList match {
         case List(name, price, specialPrice, amountForSpecialPrice) =>
@@ -27,27 +31,64 @@ object Parsers {
             name = name,
             unitPrice = BigDecimal.valueOf(price.toDouble),
             discount = None)
+        case _ => "error".asInstanceOf[StockKeepingUnit]
       }
       )
 
   def splitCommandLineArgs(args: Array[String]): List[String] = args(0).split(",").toList
 
-  def getListOfProducts(list: List[String]): List[StockKeepingUnit] = { //how to get the values out??
-    list.map(item => skuItemParser.parse(item) match {
-      case Left(v) => {
-        println(s"${list.head}")
-        Left(v)
+  def getListOfProducts(products: Array[String]): List[StockKeepingUnit] = {
+    splitCommandLineArgs(products)
+      .map(product => skuItemParser.parse(product) match {
+        case Left(v) =>
+          println(s"Incorrect format for product $product")
+          Left(v)
+        case Right(v) => Right(v._2)
       }
-      case Right(v) => Right(v._2)
-    }
-    ).filter(_.isRight).collect {
+      )
+      .filter(_.isRight).collect {
       case Right(v) => v
     }
   }
-}
-import Parsers._
 
-skuItemParser.parse("e 0.40 3 1.00,f 00.4 none,fail")
-val split = splitCommandLineArgs(Array("e 0.40 3 1.00,f 00.4 none,fail"))
-//
-val foo: Seq[StockKeepingUnit] = getListOfProducts(split)
+  val mainParser =
+    ((alpha <* sp)
+      ~ ((multiDigit <* char('.')) ~ multiDigit)
+      ~ sp
+      ~ ((digit <* sp) ~ ((multiDigit <* char('.')) ~ multiDigit) | none))
+
+  def commandLineArgsParser: Parser0[Any] =
+    !multiChar | (multiChar | mainParser <* char(',')).rep
+
+}
+
+@tailrec
+def createNewSKUMapIfThereAreNewSKUsAvailable(inputs: List[StockKeepingUnit], acc: Map[String, StockKeepingUnit] = Map.empty): Map[String, StockKeepingUnit] = {
+  if (inputs.isEmpty) {
+    println("this" + inputs)
+    currentlyAvailableProducts
+  }
+  else
+    inputs match {
+      case ::(head, next) =>
+        if (head.isInstanceOf[StockKeepingUnit]) {
+          createNewSKUMapIfThereAreNewSKUsAvailable(next, acc + (head.name -> head))
+        } else {
+          createNewSKUMapIfThereAreNewSKUsAvailable(next, acc)
+        }
+      case Nil => {
+        println("here" + acc ++ currentlyAvailableProducts)
+        acc ++ currentlyAvailableProducts
+      }
+    }
+
+}
+
+
+Parsers.commandLineArgsParser.parse("e 0.40 3 1.00,f 0.40 3 1.00")
+Parsers.commandLineArgsParser.parse("fail,e 0.40 3 1.00,f 0.40 3 1.00")
+Parsers.commandLineArgsParser.parse("e 0.40 3 1.00,fail,f 0.40 3 1.00")
+Parsers.commandLineArgsParser.parse("fail,e 0.40 3 1.00,f 0.40 3 1.00")
+Parsers.commandLineArgsParser.parse("sacxa`s")
+
+
